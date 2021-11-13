@@ -1,13 +1,40 @@
 <html>
- <head>
-  <script id="__bs_script__">//<![CDATA[
-    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.7'><\/script>".replace("HOST", location.hostname));
-//]]></script>
-  <link rel="stylesheet" href="./paper.css">
-  <script type="text/javascript" src="../node_modules/paper/dist/paper-full.js"></script>
-  <script type="text/paperscript" canvas="canvas" src="./sketch.js"></script>
-</head>
-<body>
-  <canvas id="canvas" resize="true"></canvas>
- </body>
+  <head>
+    <script id="__bs_script__">
+      //<![CDATA[
+      document.write(
+        "<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.7'><\/script>".replace(
+          "HOST",
+          location.hostname
+        )
+      );
+      //]]>
+    </script>
+    <link rel="stylesheet" href="./paper.css" />
+    <script
+      type="text/javascript"
+      src="../node_modules/paper/dist/paper-full.js"
+    ></script>
+    <script type="text/paperscript" canvas="canvas" src="./sketch.js"></script>
+  </head>
+  <body>
+    <h1>Stereographic Projections</h1>
+    <div class="vector-input">
+      <p id="x">X:</p>
+      <input type="text" id="vector-x" value="0" />
+    </div>
+    <div class="vector-input">
+      <p id="y">Y:</p>
+      <input type="text" id="vector-y" value="0" />
+    </div>
+    <div class="vector-input">
+      <p id="z">Z:</p>
+      <input type="text" id="vector-z" value="0" />
+    </div>
+    <div id="team-heading">BTP Team:</div>
+    <h2>1. Gavande Viraj Abhinav (18118030)</h2>
+    <h2>2. Prateek Tripathi (18118051)</h2>
+    <button id="vector-submit">Draw Point</button>
+    <canvas id="canvas" resize="false"></canvas>
+  </body>
 </html>

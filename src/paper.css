@@ -1,12 +1,96 @@
-body { margin: 0;}
-
-html,
 body {
-    height: 100%;
+  margin: 0;
+  position: relative;
+}
+
+h1 {
+  position: absolute;
+  left: 40vw;
+  text-transform: uppercase;
+  border-bottom: 1px solid #111;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.vector-input p {
+  position: absolute;
+  left: 70vw;
+  font-family: "Courier New", Courier, monospace;
+  width: 2vw;
+}
+
+.vector-input input {
+  position: absolute;
+  left: 73vw;
+  width: 2vw;
+  padding: 10px;
+  font-family: "Courier New", Courier, monospace;
+  margin-top: 2px;
+  border: 2px solid #555;
+  border-radius: 5px;
+}
+
+#team-heading {
+  position: absolute;
+  left: 65vw;
+  top: 65vh;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+h2 {
+  position: absolute;
+  left: 65vw;
+  top: 75vh;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 25px;
+}
+
+h2:first-of-type {
+  position: absolute;
+  left: 65vw;
+  top: 70vh;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 25px;
+}
+
+button {
+  position: absolute;
+  left: 70vw;
+  background-color: aliceblue;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 9px;
+  border-radius: 5px;
+  display: inline-block;
+  font-family: "Courier New", Courier, monospace;
+  top: 35vh;
+}
+
+button:hover {
+  color: aliceblue;
+  background-color: #00cc00;
+}
+
+#vector-x,
+#x {
+  top: 10vw;
+}
+#vector-y,
+#y {
+  top: 12.5vw;
+}
+#vector-z,
+#z {
+  top: 15vw;
 }
 
 /* Scale canvas with resize attribute to full size */
 canvas[resize] {
-    width: 100%;
-    height: 100%;
+  /* width: 100%; */
+  /* height: 100%; */
+  width: 800px;
+  height: 800px;
+  border: 2px solid #000;
+  margin: 100px 15vw;
 }
