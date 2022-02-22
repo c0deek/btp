@@ -1,4 +1,4 @@
-var drawn = false;
+var drawn =false;
 
 var Vector3D = (function (x, y, z) {
   function Vector3D(x, y, z) {
@@ -22,122 +22,123 @@ var Vector3D = (function (x, y, z) {
         vec_array[2] * vec_array[2]
     );
     v = [
-      Math.abs(vec_array[0] / mag),
-      Math.abs(vec_array[1] / mag),
-      Math.abs(vec_array[2] / mag),
+      (vec_array[0] / mag),
+      (vec_array[1] / mag),
+      (vec_array[2] / mag),
     ];
     vsign = [v[0] < 0 ? -1 : 1, v[1] < 0 ? -1 : 1, v[2] < 0 ? -1 : 1];
-    if (v[2] == 1) {
-      return [0, 0];
-    } else if (v[0] == 1 || v[1] == 1) {
-      return [vec_array[0], vec_array[1]];
-    } else {
-      var xsign = vec_array[0] < 0 ? -1 : 1;
-      var ysign = vec_array[1] < 0 ? -1 : 1;
-      console.log({
-        vector: [this.x, this.y, this.z],
-        rec: vec_array,
-        normalized: v,
-        xsign: xsign,
-        ysign: ysign,
-        "-": [v[0] / (1 - v[2]), v[1] / (1 - v[2])],
-        "+": [v[0] / (1 + v[2]), v[1] / (1 + v[2])],
-      });
-      if (v[0] < 1 - v[2] && v[1] < 1 - v[2]) {
-        console.log("- selected");
-        return [(v[0] * xsign) / (1 - v[2]), (v[1] * ysign) / (1 - v[2])];
-      } else {
-        console.log("+ selected");
-        return [(v[0] * xsign) / (1 + v[2]), (v[1] * ysign) / (1 + v[2])];
-      }
-      // var returnX = 0;
-      // var returnY = 0;
-      // if (v[0] < 1 - v[2]) {
-      //   returnX = v[0] / (1 - v[2]);
-      // } else {
-      //   returnX = v[0] / (1 + v[2]);
-      // }
-      // if (v[1] < 1 - v[2]) {
-      //   returnY = v[1] / (1 - v[2]);
-      // } else {
-      //   returnY = v[1] / (1 + v[2]);
-      // }
-      // console.log([this.x, this.y, this.z], ":", returnX, returnY);
-      // return [returnX, returnY];
-    }
+    return [v[1]/(1+v[2]),-v[0]/(1+v[2])]
   };
+
+  Vector3D.prototype.calculateTrace=function(){
+    vec_array=[this.x,this.y,this.z];
+    // if any emenet of vec_array is infinity change to 0
+    for (var i = 0; i < vec_array.length; i++) {
+      if (isNaN(vec_array[i]) || vec_array[i] === Infinity) {
+        vec_array[i] = 0;
+      }
+    }
+
+    h=this.x;
+    k=this.y;
+    l=this.z;
+    
+    if(h==0&&k==0&&l==0)
+    {
+      return [0,0,0,0,0,0];
+    }
+    
+    else if(h==0 && k==0)
+    {
+      return [-1,0,0,1,1,0,0,-1];   
+    }
+    
+    else if(k==0 && l==0)
+    {
+      return [-1,0,1,0,0,0];
+    }
+
+    else if(h==0&&l==0)
+    {
+      return [0,-1,0,1,0,0];
+    }
+
+    else if(h==0)
+    {
+      var X3=0;
+      var Y3=-(l/k);
+      var Z3=1;
+      var mag=Math.sqrt(X3*X3+Y3*Y3+Z3*Z3);
+      X3=X3/mag;
+      Y3=Y3/mag;
+      Z3=Z3/mag;
+      x3=Y3/(1+Z3);
+      return [0,1,0,-1,x3,0];   
+    }
+
+    else if(k==0)
+    {
+      var Y3=0;
+      var Z3=1;
+      var X3=-(l/h);
+      var mag=Math.sqrt(X3*X3+Y3*Y3+Z3*Z3);
+      X3=X3/mag;
+      Y3=Y3/mag;
+      Z3=Z3/mag;
+      y3=-X3/(1+Z3);
+      return [-1,0,1,0,0,y3];
+    }
+
+    else if(l==0)
+    {
+      var X1=-k;
+      var Y1=h;
+      var mag1=Math.sqrt(X1*X1+Y1*Y1);
+      X1=X1/mag1;
+      Y1=Y1/mag1;
+      var x1=Y1;
+      var y1=-X1;
+
+      var X2=k;
+      var Y2=-h;
+      X2=X2/mag1;
+      Y2=Y2/mag1;
+      var x2=Y2;
+      var y2=-X2;
+      return [x1,y1,x2,y2];
+    }
+    
+    else
+    {
+      var X1=1;
+      var Y1=-(h/k);
+      var x1=Y1/Math.sqrt(X1*X1+Y1*Y1);
+      var y1=-X1/Math.sqrt(X1*X1+Y1*Y1);
+            
+      var x2=-x1;
+      var y2=-y1;
+            
+      var X3=-(l/h);
+      var Y3=0;
+      var Z3=1;
+      var mag=Math.sqrt(X3*X3+Y3*Y3+Z3*Z3);
+      X3=X3/mag;
+      Y3=Y3/mag;
+      Z3=Z3/mag;
+      var x3=Y3/(1+Z3);
+      var y3=-X3/(1+Z3);
+      return [x1,y1,x2,y2,x3,y3];
+    }
+  }
 
   return Vector3D;
 })();
 
 var input_arr = [
   [2, 2, 1],
-  // [-1, -1, 1],
-  // [1, 1, 0],
-  // [-1, 1, 0],
-  // [1, -1, 0],
-  // [-1, -1, 0],
-  // [1, 0, 1],
-  // [0, 1, 1],
-  // [1, 0, 0],
-  // [0, 1, 0],
-  // [0, 0, 1],
-  // [0, 0, 0],
   [1, 0, 0],
   [0, 1, 0],
   [0, 0, 1],
-  // [-1, 0, 0],
-  // [0, -1, 0],
-  // [2, 2, 2],
-  // [2, 3, 1],
-  // [1, 2, 2],
-  // [2, 2, 3],
-  // [3, 2, 1],
-  // [2, 2, 1],
-  // [1, 3, 2],
-  // [2, 1, 2],
-  // [2, 2, 1],
-  // [1, 2, 3],
-  // [2, 2, 2],
-  // [2, 3, 1],
-  // [1, 2, 2],
-  // [2, 2, 3],
-  // [3, 2, 1],
-  // [2, 2, 1],
-  // [1, 3, 2],
-  // [2, 1, 2],
-  // [2, 2, 1],
-  // [1, 2, 3],
-  // [2, 2, 2],
-  // [2, 3, 1],
-  // [1, 2, 2],
-  // [2, 2, 3],
-  // [3, 2, 1],
-  // [2, 2, 1],
-  // [1, 3, 2],
-  // [2, 1, 2],
-  // [2, 2, 1],
-  // [1, 2, 3],
-  // [2, 2, 2],
-  // [2, 3, 1],
-  // [1, 2, 2],
-  // [2, 2, 3],
-  // [3, 2, 1],
-  // [2, 2, 1],
-  // [1, 3, 2],
-  // [2, 1, 2],
-  // [2, 2, 1],
-  // [1, 2, 3],
-  // [2, 2, 2],
-  // [2, 3, 1],
-  // [1, 2, 2],
-  // [2, 2, 3],
-  // [3, 2, 1],
-  // [2, 2, 1],
-  // [1, 3, 2],
-  // [1, -2, 3],
-  // [-2, 1, 3],
-  // [3, -2, 1],
 ];
 var points_arr = [];
 
@@ -226,7 +227,7 @@ var xaxispoint = new Path.Circle({
 var xaxistext = new PointText({
   position: [400 - 10, 400 - 10],
   content: "[001]",
-  fillColor: "red",
+  fillColor: "blue",
   fontFamily: "Courier New",
   fontSize: 12,
   fontWeight: "bold",
@@ -241,24 +242,24 @@ var yaxispoint = new Path.Circle({
 
 var yaxistext = new PointText({
   position: [600 - 10, 400 - 10],
-  content: "[100]",
-  fillColor: "red",
+  content: "[010]",
+  fillColor: "blue",
   fontFamily: "Courier New",
   fontSize: 12,
   fontWeight: "bold",
 });
 
 var zaxispoint = new Path.Circle({
-  center: [400, 200],
+  center: [400, 600],
   radius: 2,
   strokeColor: "red",
   fillColor: "red",
 });
 
 var yaxistext = new PointText({
-  position: [400 - 10, 200 - 10],
-  content: "[010]",
-  fillColor: "red",
+  position: [400 - 10, 600 - 10],
+  content: "[100]",
+  fillColor: "blue",
   fontFamily: "Courier New",
   fontSize: 12,
   fontWeight: "bold",
@@ -306,15 +307,63 @@ function drawPoint(x, y, z) {
   });
 }
 
+function drawTrace(x, y, z){
+  var vec = new Vector3D(x, y, z);
+  var p=vec.calculateTrace();
+  
+  if(p.length>6)
+  {
+    var TraceCircle = new Path.Circle({
+      center: [400, 400],
+      radius: 200,
+      strokeColor: "red",
+      dashArray: [10, 5],
+    });
+
+  }
+
+  else if(p.length<6)
+  {
+    var x1=p[0];
+    var y1=p[1];   
+    var x2=p[2];
+    var y2=p[3];
+    var axisX = new Path.Line({
+      from: [400+200*x1, 400-200*y1],
+      to: [400+200*x2, 400-200*y2],
+      strokeColor: "red",
+      dashArray: [10, 5],
+    });
+
+  }
+
+  else
+  {
+    var x1=p[0];
+    var y1=p[1];   
+    var x2=p[2];
+    var y2=p[3];
+    var x3=p[4];
+    var y3=p[5];
+
+    var arc4 = new Path.Arc({
+      from: [400 +x1*200, 400-200*y1],
+      through: [400+ 200*x3, 400 -200*y3],
+      to: [400 +200*x2, 400-200*y2],
+      strokeWidth: 1,
+      strokeColor: "red",
+      dashArray: [10, 5],
+    });
+  }
+    
+  
+}
+
 document.getElementById("vector-submit").addEventListener("click", function () {
   var inputx = document.getElementById("vector-x").value;
   var inputy = document.getElementById("vector-y").value;
   var inputz = document.getElementById("vector-z").value;
-  // console.log(
-  //   "input",
-  //   Math.abs(Number(inputx)).toString().length,
-  //   Number(inputx).toString()
-  // );
+
   console.log(
     "a",
     Math.abs(Number(inputx)),
@@ -323,35 +372,57 @@ document.getElementById("vector-submit").addEventListener("click", function () {
   );
   if (isNaN(Number(inputx)) || isNaN(Number(inputy)) || isNaN(Number(inputz))) {
     alert("Please enter a valid number");
-  } else if (
+  } 
+  else if (
     Math.abs(Number(inputx)).toString().length > 1 ||
     Math.abs(Number(inputy)).toString().length > 1 ||
     Math.abs(Number(inputz)).toString().length > 1
   ) {
     alert("Please enter a valid number");
-  } else if (
-    Math.abs(Number(inputx)) == 2 &&
-    Math.abs(Number(inputy)) == 2 &&
-    Math.abs(Number(inputz)) == 1
-  ) {
-    var abx = (0.5 * Number(inputx)) / Math.abs(Number(inputx));
-    var aby = (0.5 * Number(inputy)) / Math.abs(Number(inputy));
-    var a = new Path.Circle({
-      center: [400 + abx * 200, 400 - aby * 200],
-      radius: 2,
-      strokeColor: "black",
-      fillColor: "black",
-    });
-    var awesometext = new PointText({
-      position: [400 + abx * 200 - 10, 400 - aby * 200 - 10],
-      content: "[" + inputx + inputy + inputz + "]", // "[" + point[0].toFixed(2) + "," + point[1].toFixed(2) + "]",
-      fillColor: "black",
-      fontFamily: "Courier New",
-      fontWeight: "bold",
-      fontSize: 12,
-      opacity: 1,
-    });
-  } else {
+  } 
+  else {
+    if(inputz<0)
+    {
+      inputz=inputz*-1;
+      inputx=inputx*-1;
+      inputy=inputy*-1;
+    }
     drawPoint(inputx, inputy, inputz);
+    //document.getElementById("show-trace").addEventListener("click", function () {
+      //drawTrace(inputx,inputy, inputz);
+    //}
+  }
+});
+
+document.getElementById("show-trace").addEventListener("click", function () {
+  var inputx = document.getElementById("vector-x").value;
+  var inputy = document.getElementById("vector-y").value;
+  var inputz = document.getElementById("vector-z").value;
+
+  console.log(
+    "a",
+    Math.abs(Number(inputx)),
+    Math.abs(Number(inputy)),
+    Math.abs(Number(inputz))
+  );
+  if (isNaN(Number(inputx)) || isNaN(Number(inputy)) || isNaN(Number(inputz))) {
+    alert("Please enter a valid number");
+  } 
+
+  else if (
+    Math.abs(Number(inputx)).toString().length > 1 ||
+    Math.abs(Number(inputy)).toString().length > 1 ||
+    Math.abs(Number(inputz)).toString().length > 1
+  ) {
+    alert("Please enter a valid number");
+  } 
+  else {
+    if(inputz<0)
+    {
+      inputz=inputz*-1;
+      inputx=inputx*-1;
+      inputy=inputy*-1;
+    }
+    drawTrace(inputx,inputy, inputz);
   }
 });
