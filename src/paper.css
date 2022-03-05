@@ -72,6 +72,14 @@ button:hover {
   background-color: #00cc00;
 }
 
+#vector-submit {
+  top: 38vh;
+}
+
+#show-trace {
+  top: 43vh;
+}
+
 #vector-x,
 #x {
   top: 10vw;
