@@ -13,14 +13,32 @@ h1 {
 
 .vector-input p {
   position: absolute;
-  left: 70vw;
+  left: 68vw;
+  font-family: "Courier New", Courier, monospace;
+  width: 2vw;
+}
+
+.orientation-input p {
+  position: absolute;
+  left: 83vw;
   font-family: "Courier New", Courier, monospace;
   width: 2vw;
 }
 
 .vector-input input {
   position: absolute;
-  left: 73vw;
+  left: 70vw;
+  width: 2vw;
+  padding: 10px;
+  font-family: "Courier New", Courier, monospace;
+  margin-top: 2px;
+  border: 2px solid #555;
+  border-radius: 5px;
+}
+
+.orientation-input input {
+  position: absolute;
+  left: 85vw;
   width: 2vw;
   padding: 10px;
   font-family: "Courier New", Courier, monospace;
@@ -73,11 +91,18 @@ button:hover {
 }
 
 #vector-submit {
-  top: 38vh;
+  top: 40vh;
+  left: 67.5vw;
+}
+
+#change-orientation {
+  top: 40vh;
+  left: 81vw;
 }
 
 #show-trace {
-  top: 43vh;
+  top: 45vh;
+  left: 68.5vw;
 }
 
 #vector-x,
@@ -90,6 +115,19 @@ button:hover {
 }
 #vector-z,
 #z {
+  top: 15vw;
+}
+
+#orientation-x,
+#ox {
+  top: 10vw;
+}
+#orientation-y,
+#oy {
+  top: 12.5vw;
+}
+#orientation-z,
+#oz {
   top: 15vw;
 }
 

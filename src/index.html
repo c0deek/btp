@@ -19,17 +19,33 @@
   </head>
   <body>
     <h1>Stereographic Projections</h1>
-    <div class="vector-input">
-      <p id="x">X:</p>
-      <input type="text" id="vector-x" value="0" />
+    <div id="plotting-controls">
+      <div class="vector-input">
+        <p id="x">X:</p>
+        <input type="text" id="vector-x" value="0" />
+      </div>
+      <div class="vector-input">
+        <p id="y">Y:</p>
+        <input type="text" id="vector-y" value="0" />
+      </div>
+      <div class="vector-input">
+        <p id="z">Z:</p>
+        <input type="text" id="vector-z" value="0" />
+      </div>
     </div>
-    <div class="vector-input">
-      <p id="y">Y:</p>
-      <input type="text" id="vector-y" value="0" />
-    </div>
-    <div class="vector-input">
-      <p id="z">Z:</p>
-      <input type="text" id="vector-z" value="0" />
+    <div id="orientation-controls">
+      <div class="orientation-input">
+        <p id="ox">h:</p>
+        <input type="text" id="orientation-x" value="0" />
+      </div>
+      <div class="orientation-input">
+        <p id="oy">k:</p>
+        <input type="text" id="orientation-y" value="0" />
+      </div>
+      <div class="orientation-input">
+        <p id="oz">l:</p>
+        <input type="text" id="orientation-z" value="0" />
+      </div>
     </div>
     <div id="team-heading">BTP Team:</div>
     <h2>1. Gavande Viraj Abhinav (18118030)</h2>
@@ -38,6 +54,7 @@
       <button id="vector-submit">Draw Point</button>
       <canvas id="canvas" resize="false"></canvas> 
       <button id="show-trace">Trace</button> 
+      <button id="change-orientation">Change Orientation</button> 
     </div>
   </body>
 </html>
