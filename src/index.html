@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script id="__bs_script__">
+    <script src="https://kit.fontawesome.com/45dffe9209.js" crossorigin="anonymous"></script>    <script id="__bs_script__">
       //<![CDATA[
       document.write(
         "<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.7'><\/script>".replace(
@@ -10,51 +10,107 @@
       );
       //]]>
     </script>
-    <link rel="stylesheet" href="./paper.css" />
     <script
       type="text/javascript"
       src="../node_modules/paper/dist/paper-full.js"
     ></script>
-    <script type="text/paperscript" canvas="canvas" src="./sketch.js"></script>
+    <script type="text/javascript" src="./helper.js"></script>
+    <!-- <script type="text/paperscript" canvas="canvas" src="./sketch.js"></script> -->
+    <script type="text/paperscript" canvas="canvas2" src="./sketch2.js"></script>
+    <link rel="stylesheet" href="./paper.css" />
   </head>
   <body>
-    <h1>Stereographic Projections</h1>
-    <div id="plotting-controls">
-      <div class="vector-input">
-        <p id="x">X:</p>
-        <input type="text" id="vector-x" value="0" />
+    <p id="stan-orientation-001">001</p>
+    <p id="stan-orientation-010">010</p>
+    <p id="stan-orientation-100">100</p>
+    <div id="point-tooltip">Hover point or trace for miller indices</div>
+    <header class="header">
+      <ul class="menu">
+        <li><a href="./index.html" class="link link-theme link-arrow">Standard Projections</a></li>
+        <li><a href="./orientation.html" class="link link-theme link-arrow">Rotation</a></li>
+      </ul>
+    </header>
+
+    <canvas id="canvas2" resize="false"></canvas>
+      <!-- <canvas id="canvas-010" resize="false"></canvas> -->
+    <!-- <h1 id="heading">Stereographic Projections</h1> -->
+    <div id="plotting-controls-001">
+      <div class="vector-input-001">
+        <img id="wulff-net-001" src="./Image_24-removebg-preview.png" alt="logo" />
+        <button id="wulff-net-001-button">Toggle Wulff Net</button>
+        <div id="wulff-001-left"><i class="fa-solid fa-rotate-left"></i></div>
+        <div id="wulff-001-left-e"><i class="fa-solid fa-rotate-left"></i></div>
+        <div id="wulff-001-right-e"><i class="fa-solid fa-rotate-right"></i></div>
+        <div id="wulff-001-right"><i class="fa-solid fa-rotate-right"></i></div>
+        <p id="x-001">X:</p>
+        <input type="text" id="vector-x-001" value="0" />
       </div>
-      <div class="vector-input">
-        <p id="y">Y:</p>
-        <input type="text" id="vector-y" value="0" />
+      <div class="vector-input-001">
+        <p id="y-001">Y:</p>
+        <input type="text" id="vector-y-001" value="0" />
       </div>
-      <div class="vector-input">
-        <p id="z">Z:</p>
-        <input type="text" id="vector-z" value="0" />
+      <div class="vector-input-001">
+        <p id="z-001">Z:</p>
+        <input type="text" id="vector-z-001" value="0" />
       </div>
     </div>
-    <div id="orientation-controls">
-      <div class="orientation-input">
-        <p id="ox">h:</p>
-        <input type="text" id="orientation-x" value="0" />
+    <div id="plotting-controls-010">
+        <img id="wulff-net-010" src="./Image_24-removebg-preview.png" alt="logo" />
+        <button id="wulff-net-010-button">Toggle Wulff Net</button>
+        <div id="wulff-010-left"><i class="fa-solid fa-rotate-left"></i></div>
+        <div id="wulff-010-right"><i class="fa-solid fa-rotate-right"></i></div>
+        <div id="wulff-010-left-e"><i class="fa-solid fa-rotate-left"></i></div>
+        <div id="wulff-010-right-e"><i class="fa-solid fa-rotate-right"></i></div>
+        <div class="vector-input-010">
+          <p id="x-010">X:</p>
+        <input type="text" id="vector-x-010" value="0" />
       </div>
-      <div class="orientation-input">
-        <p id="oy">k:</p>
-        <input type="text" id="orientation-y" value="0" />
+      <div class="vector-input-010">
+        <p id="y-010">Y:</p>
+        <input type="text" id="vector-y-010" value="0" />
       </div>
-      <div class="orientation-input">
-        <p id="oz">l:</p>
-        <input type="text" id="orientation-z" value="0" />
+      <div class="vector-input-010">
+        <p id="z-010">Z:</p>
+        <input type="text" id="vector-z-010" value="0" />
       </div>
     </div>
-    <div id="team-heading">BTP Team:</div>
-    <h2>1. Gavande Viraj Abhinav (18118030)</h2>
-    <h2>2. Prateek Tripathi (18118051)</h2>
-    <div>
-      <button id="vector-submit">Draw Point</button>
-      <canvas id="canvas" resize="false"></canvas> 
-      <button id="show-trace">Trace</button> 
-      <button id="change-orientation">Change Orientation</button> 
+    <div id="plotting-controls-100">
+        <img id="wulff-net-100" src="./Image_24-removebg-preview.png" alt="logo" />
+        <button id="wulff-net-100-button">Toggle Wulff Net</button>
+        <div id="wulff-100-left"><i class="fa-solid fa-rotate-left"></i></div>
+        <div id="wulff-100-right"><i class="fa-solid fa-rotate-right"></i></div>
+        <div id="wulff-100-left-e"><i class="fa-solid fa-rotate-left"></i></div>
+        <div id="wulff-100-right-e"><i class="fa-solid fa-rotate-right"></i></div>
+        <div class="vector-input-100">
+        <p id="x-100">X:</p>
+        <input type="text" id="vector-x-100" value="0" />
+      </div>
+      <div class="vector-input-100">
+        <p id="y-100">Y:</p>
+        <input type="text" id="vector-y-100" value="0" />
+      </div>
+      <div class="vector-input-100">
+        <p id="z-100">Z:</p>
+        <input type="text" id="vector-z-100" value="0" />
+      </div>
     </div>
-  </body>
+   
+    <!-- <div id="team-heading">BTP Team:</div10 -->
+    <div class="buttons-001">
+      <button id="vector-submit-001">Plot</button>
+      <button id="trace-submit-001">Trace</button> 
+      <button id="families-submit-001">Families</button>
+    </div>
+    <div class="buttons-010">
+      <button id="vector-submit-010">Plot</button>
+      <button id="trace-submit-010">Trace</button> 
+      <button id="families-submit-010">Families</button>
+    </div>
+    <div class="buttons-100">
+      <button id="vector-submit-100">Plot</button>
+      <button id="trace-submit-100">Trace</button> 
+      <button id="families-submit-100">Families</button>
+    </div>
+      
+    </body>
 </html>
