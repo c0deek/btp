@@ -580,6 +580,7 @@ function plot_Family(q1, q1_t, possible_combinations) {
       c
     );
     drawPoint(g1[0], g1[1], g1[2], g1[3], g1[4], g1[5], "black");
+    drawTrace(g1[0], g1[1], g1[2], g1[3], g1[4], g1[5]);
   }
 }
 
