@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <script src="https://kit.fontawesome.com/45dffe9209.js" crossorigin="anonymous"></script>
+      <script id="__bs_script__">
+      //<![CDATA[
+      document.write(
+        "<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.7'><\/script>".replace(
+          "HOST",
+          location.hostname
+        )
+      );
+      //]]>
+    </script>
+    <link rel="stylesheet" href="./orientation.css" />
+    <script
+      type="text/javascript"
+      src="../node_modules/paper/dist/paper-full.js"
+    ></script>
+    <script type="text/paperscript" canvas="canvas" src="./rotation.js"></script>
+  </head>
+  <body>
+    <header class="header">
+      <ul class="menu">
+        <li><a href="./index.html" class="link link-theme link-arrow">Standard Projections</a></li>
+        <li><a href="./orientation.html" class="link link-theme link-arrow">Rotation</a></li>
+      </ul>
+    </header>
+    <div id="plotting-controls">
+      <div class="vector-input">
+        <p id="x">X:</p>
+        <input type="number" step=0.01 id="vector-x" value="0" />
+      </div>
+      <div class="vector-input">
+        <p id="y">Y:</p>
+        <input type="number" step=0.01 id="vector-y" value="0" />
+      </div>
+      <div class="vector-input">
+        <p id="z">Z:</p>
+        <input type="number" step=0.01 id="vector-z" value="0" />
+      </div>
+    </div>
+    <div id="orientation-controls">
+      <div class="orientation-input">
+        <p id="ox">h:</p>
+        <input type="text" id="orientation-x" value="1" />
+      </div>
+      <div class="orientation-input">
+        <p id="oy">k:</p>
+        <input type="text"  id="orientation-y" value="0" />
+      </div>
+      <div class="orientation-input">
+        <p id="oz">l:</p>
+        <input type="text"  id="orientation-z" value="0" />
+      </div>
+    </div>
+    <div>
+    <div id="point-tooltip">Hover point or trace for miller indices</div>
+      <button id="families-submit">Families</button>
+      <button id="wulff-net-button">Toggle Wulff Net</button>
+        <div id="wulff-left"><i class="fa-solid fa-rotate-left"></i></div>
+        <div id="wulff-right"><i class="fa-solid fa-rotate-right"></i></div>
+        <div id="wulff-left-e"><i class="fa-solid fa-rotate-left"></i></div>
+        <div id="wulff-right-e"><i class="fa-solid fa-rotate-right"></i></div>
+      <button id="vector-submit">Point</button>
+        <img id="wulff-net" src="./Image_24-removebg-preview.png" alt="logo" />
+        <canvas id="canvas" resize="false"></canvas> 
+      <button id="show-trace">Trace</button> 
+      <button id="change-orientation">Set Orientation</button> 
+    </div>
+  </body>
+</html>

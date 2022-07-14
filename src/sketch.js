@@ -1,4 +1,4 @@
-var drawn =false;
+var drawn = false;
 
 var Vector3D = (function (x, y, z) {
   function Vector3D(x, y, z) {
@@ -21,17 +21,13 @@ var Vector3D = (function (x, y, z) {
         vec_array[1] * vec_array[1] +
         vec_array[2] * vec_array[2]
     );
-    v = [
-      (vec_array[0] / mag),
-      (vec_array[1] / mag),
-      (vec_array[2] / mag),
-    ];
+    v = [vec_array[0] / mag, vec_array[1] / mag, vec_array[2] / mag];
     vsign = [v[0] < 0 ? -1 : 1, v[1] < 0 ? -1 : 1, v[2] < 0 ? -1 : 1];
-    return [v[1]/(1+v[2]),-v[0]/(1+v[2])]
+    return [v[1] / (1 + v[2]), -v[0] / (1 + v[2])];
   };
 
-  Vector3D.prototype.calculateTrace=function(){
-    vec_array=[this.x,this.y,this.z];
+  Vector3D.prototype.calculateTrace = function () {
+    vec_array = [this.x, this.y, this.z];
     // if any emenet of vec_array is infinity change to 0
     for (var i = 0; i < vec_array.length; i++) {
       if (isNaN(vec_array[i]) || vec_array[i] === Infinity) {
@@ -39,97 +35,75 @@ var Vector3D = (function (x, y, z) {
       }
     }
 
-    h=this.x;
-    k=this.y;
-    l=this.z;
-    
-    if(h==0&&k==0&&l==0)
-    {
-      return [0,0,0,0,0,0];
-    }
-    
-    else if(h==0 && k==0)
-    {
-      return [-1,0,0,1,1,0,0,-1];   
-    }
-    
-    else if(k==0 && l==0)
-    {
-      return [-1,0,1,0,0,0];
-    }
+    h = this.x;
+    k = this.y;
+    l = this.z;
 
-    else if(h==0&&l==0)
-    {
-      return [0,-1,0,1,0,0];
-    }
+    if (h == 0 && k == 0 && l == 0) {
+      return [0, 0, 0, 0, 0, 0];
+    } else if (h == 0 && k == 0) {
+      return [-1, 0, 0, 1, 1, 0, 0, -1];
+    } else if (k == 0 && l == 0) {
+      return [-1, 0, 1, 0, 0, 0];
+    } else if (h == 0 && l == 0) {
+      return [0, -1, 0, 1, 0, 0];
+    } else if (h == 0) {
+      var X3 = 0;
+      var Y3 = -(l / k);
+      var Z3 = 1;
+      var mag = Math.sqrt(X3 * X3 + Y3 * Y3 + Z3 * Z3);
+      X3 = X3 / mag;
+      Y3 = Y3 / mag;
+      Z3 = Z3 / mag;
+      x3 = Y3 / (1 + Z3);
+      return [0, 1, 0, -1, x3, 0];
+    } else if (k == 0) {
+      var Y3 = 0;
+      var Z3 = 1;
+      var X3 = -(l / h);
+      var mag = Math.sqrt(X3 * X3 + Y3 * Y3 + Z3 * Z3);
+      X3 = X3 / mag;
+      Y3 = Y3 / mag;
+      Z3 = Z3 / mag;
+      y3 = -X3 / (1 + Z3);
+      return [-1, 0, 1, 0, 0, y3];
+    } else if (l == 0) {
+      var X1 = -k;
+      var Y1 = h;
+      var mag1 = Math.sqrt(X1 * X1 + Y1 * Y1);
+      X1 = X1 / mag1;
+      Y1 = Y1 / mag1;
+      var x1 = Y1;
+      var y1 = -X1;
 
-    else if(h==0)
-    {
-      var X3=0;
-      var Y3=-(l/k);
-      var Z3=1;
-      var mag=Math.sqrt(X3*X3+Y3*Y3+Z3*Z3);
-      X3=X3/mag;
-      Y3=Y3/mag;
-      Z3=Z3/mag;
-      x3=Y3/(1+Z3);
-      return [0,1,0,-1,x3,0];   
-    }
+      var X2 = k;
+      var Y2 = -h;
+      X2 = X2 / mag1;
+      Y2 = Y2 / mag1;
+      var x2 = Y2;
+      var y2 = -X2;
+      return [x1, y1, x2, y2];
+    } else {
+      var X1 = 1;
+      var Y1 = -(h / k);
+      var x1 = Y1 / Math.sqrt(X1 * X1 + Y1 * Y1);
+      var y1 = -X1 / Math.sqrt(X1 * X1 + Y1 * Y1);
 
-    else if(k==0)
-    {
-      var Y3=0;
-      var Z3=1;
-      var X3=-(l/h);
-      var mag=Math.sqrt(X3*X3+Y3*Y3+Z3*Z3);
-      X3=X3/mag;
-      Y3=Y3/mag;
-      Z3=Z3/mag;
-      y3=-X3/(1+Z3);
-      return [-1,0,1,0,0,y3];
-    }
+      var x2 = -x1;
+      var y2 = -y1;
 
-    else if(l==0)
-    {
-      var X1=-k;
-      var Y1=h;
-      var mag1=Math.sqrt(X1*X1+Y1*Y1);
-      X1=X1/mag1;
-      Y1=Y1/mag1;
-      var x1=Y1;
-      var y1=-X1;
-
-      var X2=k;
-      var Y2=-h;
-      X2=X2/mag1;
-      Y2=Y2/mag1;
-      var x2=Y2;
-      var y2=-X2;
-      return [x1,y1,x2,y2];
+      var X3 = -(l / h);
+      var Y3 = 0;
+      var Z3 = 1;
+      var mag = Math.sqrt(X3 * X3 + Y3 * Y3 + Z3 * Z3);
+      X3 = X3 / mag;
+      Y3 = Y3 / mag;
+      Z3 = Z3 / mag;
+      var x3 = Y3 / (1 + Z3);
+      var y3 = -X3 / (1 + Z3);
+      return [x1, y1, x2, y2, x3, y3];
     }
-    
-    else
-    {
-      var X1=1;
-      var Y1=-(h/k);
-      var x1=Y1/Math.sqrt(X1*X1+Y1*Y1);
-      var y1=-X1/Math.sqrt(X1*X1+Y1*Y1);
-            
-      var x2=-x1;
-      var y2=-y1;
-            
-      var X3=-(l/h);
-      var Y3=0;
-      var Z3=1;
-      var mag=Math.sqrt(X3*X3+Y3*Y3+Z3*Z3);
-      X3=X3/mag;
-      Y3=Y3/mag;
-      Z3=Z3/mag;
-      var x3=Y3/(1+Z3);
-      var y3=-X3/(1+Z3);
-      return [x1,y1,x2,y2,x3,y3];
-    }
-  }
+  };
 
   return Vector3D;
 })();
@@ -307,56 +281,45 @@ function drawPoint(x, y, z) {
   });
 }
 
-function drawTrace(x, y, z){
+function drawTrace(x, y, z) {
   var vec = new Vector3D(x, y, z);
-  var p=vec.calculateTrace();
-  
-  if(p.length>6)
-  {
+  var p = vec.calculateTrace();
+
+  if (p.length > 6) {
     var TraceCircle = new Path.Circle({
       center: [400, 400],
       radius: 200,
       strokeColor: "red",
       dashArray: [10, 5],
     });
-
-  }
-
-  else if(p.length<6)
-  {
-    var x1=p[0];
-    var y1=p[1];   
-    var x2=p[2];
-    var y2=p[3];
+  } else if (p.length < 6) {
+    var x1 = p[0];
+    var y1 = p[1];
+    var x2 = p[2];
+    var y2 = p[3];
     var axisX = new Path.Line({
-      from: [400+200*x1, 400-200*y1],
-      to: [400+200*x2, 400-200*y2],
+      from: [400 + 200 * x1, 400 - 200 * y1],
+      to: [400 + 200 * x2, 400 - 200 * y2],
       strokeColor: "red",
       dashArray: [10, 5],
     });
-
-  }
-
-  else
-  {
-    var x1=p[0];
-    var y1=p[1];   
-    var x2=p[2];
-    var y2=p[3];
-    var x3=p[4];
-    var y3=p[5];
+  } else {
+    var x1 = p[0];
+    var y1 = p[1];
+    var x2 = p[2];
+    var y2 = p[3];
+    var x3 = p[4];
+    var y3 = p[5];
 
     var arc4 = new Path.Arc({
-      from: [400 +x1*200, 400-200*y1],
-      through: [400+ 200*x3, 400 -200*y3],
-      to: [400 +200*x2, 400-200*y2],
+      from: [400 + x1 * 200, 400 - 200 * y1],
+      through: [400 + 200 * x3, 400 - 200 * y3],
+      to: [400 + 200 * x2, 400 - 200 * y2],
       strokeWidth: 1,
       strokeColor: "red",
       dashArray: [10, 5],
     });
   }
-    
-  
 }
 
 document.getElementById("vector-submit").addEventListener("click", function () {
@@ -372,24 +335,21 @@ document.getElementById("vector-submit").addEventListener("click", function () {
   );
   if (isNaN(Number(inputx)) || isNaN(Number(inputy)) || isNaN(Number(inputz))) {
     alert("Please enter a valid number");
-  } 
-  else if (
+  } else if (
     Math.abs(Number(inputx)).toString().length > 1 ||
     Math.abs(Number(inputy)).toString().length > 1 ||
     Math.abs(Number(inputz)).toString().length > 1
   ) {
     alert("Please enter a valid number");
-  } 
-  else {
-    if(inputz<0)
-    {
-      inputz=inputz*-1;
-      inputx=inputx*-1;
-      inputy=inputy*-1;
+  } else {
+    if (inputz < 0) {
+      inputz = inputz * -1;
+      inputx = inputx * -1;
+      inputy = inputy * -1;
     }
     drawPoint(inputx, inputy, inputz);
     //document.getElementById("show-trace").addEventListener("click", function () {
-      //drawTrace(inputx,inputy, inputz);
+    //drawTrace(inputx,inputy, inputz);
     //}
   }
 });
@@ -407,22 +367,18 @@ document.getElementById("show-trace").addEventListener("click", function () {
   );
   if (isNaN(Number(inputx)) || isNaN(Number(inputy)) || isNaN(Number(inputz))) {
     alert("Please enter a valid number");
-  } 
-
-  else if (
+  } else if (
     Math.abs(Number(inputx)).toString().length > 1 ||
     Math.abs(Number(inputy)).toString().length > 1 ||
     Math.abs(Number(inputz)).toString().length > 1
   ) {
     alert("Please enter a valid number");
-  } 
-  else {
-    if(inputz<0)
-    {
-      inputz=inputz*-1;
-      inputx=inputx*-1;
-      inputy=inputy*-1;
+  } else {
+    if (inputz < 0) {
+      inputz = inputz * -1;
+      inputx = inputx * -1;
+      inputy = inputy * -1;
     }
-    drawTrace(inputx,inputy, inputz);
+    drawTrace(inputx, inputy, inputz);
   }
 });
